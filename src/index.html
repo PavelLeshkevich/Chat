@@ -1,28 +1,29 @@
 <html>
-    <head>
-        <title>Chat</title>
-        <script src="index.js"></script>
-        <style type="text/css">
-            .message{
-                padding-bottom: 20px;
-            }
-            input, div{
-                font-size: large;
-            }
-        </style>
-    </head>
-    <body>
-        <script>
-            setUpSocket(displayMessage);
-        </script>
+<head>
+    <title>Chat</title>
+    <script src="index.js"></script>
+    <style type="text/css">
+        .message {
+            padding-bottom: 20px;
+        }
+        input, div {
+            font-size: x-large;
+        }
+    </style>
+</head>
+<body>
+<script>
+    setUpSocket(displayMessage);
+</script>
 
-        <form action="#" onsubmit="return handleSubmit()">
-            <input type="text" id="chat-msg"/>
-            <input type="submit" value="send"/>
-        </form>
+<form action="#" onsubmit="return handleSubmit()">
+    <input type="text" id="chat-msg" />
+    <input type="submit" value="send" />
+</form>
 
-        <div id="container">
+<div id="container">
 
-        </div>
-    </body>
+</div>
+
+</body>
 </html>

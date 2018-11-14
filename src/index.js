@@ -2,8 +2,9 @@ window.socket = new WebSocket("ws://" + location.host + "/ws");
 
 function sendMessage(msg)
 {
-    var len = msg.length
-    socket.send(msg)
+    var len = '' + msg.length
+    while (len.length < 5) len += ' '
+    socket.send(len + msg)
 }
 
 function handleSubmit()
@@ -15,11 +16,10 @@ function handleSubmit()
     return false;
 }
 
-
 function setUpSocket(onmessage)
 {
     socket.onopen = function() {
-        console.log("Connection");
+        console.log("Connected");
     }
 
     socket.onclose = function(event) {
@@ -34,7 +34,7 @@ function setUpSocket(onmessage)
     socket.onmessage = onmessage;
 
     socket.onerror = function(error) {
-        console.log("Error " + error.message);
+        console.log("Ошибка " + error.message);
     }
 }
 
