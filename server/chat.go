@@ -45,10 +45,10 @@ func (chat *Chat) Join(conn net.Conn) {
 	}()
 }
 
-func (chat *Chat) Broadcast(data string) {
+func (chat *Chat) Broadcast(msg string) {
 	chat.UpdateClientsList()
 	for _, client := range chat.clients {
-		client.outgoing <- data
+		client.outgoing <- msg
 	}
 }
 

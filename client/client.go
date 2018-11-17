@@ -5,41 +5,40 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
 )
 
 const (
-	PORT = ":8000"
-)
-
-var (
-	connection net.Conn
-	reader     *bufio.Reader
-	writer     *bufio.Writer
+	PORT       = ":8000"
+	END_STRING = '\n'
 )
 
 func main() {
 	conn, err := net.Dial("tcp", PORT)
 	if err != nil {
 		log.Fatal("Could not connect to the server", err)
-		return
 	}
 	defer conn.Close()
-	connection = conn
-
-	reader = bufio.NewReader(connection)
-	writer = bufio.NewWriter(connection)
-
-	writer.WriteString("Please write you name :)")
-	writer.Flush()
+	connection := conn
 
 	go func() {
+		reader := bufio.NewReader(connection)
 		for {
-			data, err := reader.ReadString('\n')
+			msg, err := reader.ReadString(END_STRING)
 			if err != nil {
-				log.Fatal("Server down ):")
+				log.Fatal("Server Down! GoodBye!")
 				break
 			}
-			fmt.Println(data)
+			fmt.Println(string(msg))
 		}
 	}()
+
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		msg, err := reader.ReadBytes(END_STRING)
+		if err != nil {
+			log.Println("Could not get message.")
+		}
+		conn.Write(msg)
+	}
 }

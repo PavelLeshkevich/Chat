@@ -8,7 +8,6 @@ import (
 
 const (
 	PORT = ":8000"
-	END_STRING = "\n"
 )
 
 func main() {
