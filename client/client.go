@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	PORT = 8000
+	PORT = ":8000"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", ":"+string(PORT))
+	conn, err := net.Dial("tcp", PORT)
 	if err != nil {
 		log.Fatal("Could not connect to the server", err)
 		return
@@ -35,7 +35,7 @@ func main() {
 	go func() {
 		for {
 			data, err := reader.ReadString('\n')
-			if err != nill {
+			if err != nil {
 				log.Fatal("Server down ):")
 				break
 			}
