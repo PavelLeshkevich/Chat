@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"strings"
 )
 
 const (
@@ -56,14 +57,22 @@ func (client *Client) Write() {
 }
 
 func (client *Client) Read() {
+	clientNameIsHave := false
 	for {
 		msg, err := client.reader.ReadString(END_STRING)
 		if err != nil {
-			client.incoming <- fmt.Sprintf("%s disconnected", client.name)
+			client.incoming <- fmt.Sprintf("%s is offline\n", client.name)
 			client.disconnect <- true
 			client.conn.Close()
 			break
 		}
-		client.incoming <- fmt.Sprintf("%s: %s", client.name, msg)
+		if clientNameIsHave == false {
+			clientNameIsHave = true
+			name := strings.TrimSpace(strings.SplitAfter(msg, "\n")[0])
+			client.name = name
+			client.incoming <- fmt.Sprintf("%s is online\n", client.name)
+		} else {
+			client.incoming <- fmt.Sprintf("%s: %s", client.name, msg)
+		}
 	}
 }

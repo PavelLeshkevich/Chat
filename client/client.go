@@ -21,6 +21,8 @@ func main() {
 	defer conn.Close()
 	connection := conn
 
+	fmt.Print("Please entry your name: ")
+
 	go func() {
 		reader := bufio.NewReader(connection)
 		for {
@@ -37,7 +39,7 @@ func main() {
 	for {
 		msg, err := reader.ReadBytes(END_STRING)
 		if err != nil {
-			log.Println("Could not get message.")
+			log.Println("Could not get message: ", err)
 		}
 		conn.Write(msg)
 	}
