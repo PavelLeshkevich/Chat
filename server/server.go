@@ -57,7 +57,7 @@ func (client *Client) Write() {
 }
 
 func (client *Client) Read() {
-	clientNameIsHave := false
+	isClientName := false
 	for {
 		msg, err := client.reader.ReadString(END_STRING)
 		if err != nil {
@@ -66,8 +66,8 @@ func (client *Client) Read() {
 			client.conn.Close()
 			break
 		}
-		if clientNameIsHave == false {
-			clientNameIsHave = true
+		if isClientName == false {
+			isClientName = true
 			name := strings.TrimSpace(strings.SplitAfter(msg, "\n")[0])
 			client.name = name
 			client.incoming <- fmt.Sprintf("%s is online\n", client.name)
